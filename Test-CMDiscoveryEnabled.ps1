@@ -4,10 +4,12 @@
   Stupid function for a stupid reason
 .DESCRIPTION
   why am I having to write this?
+  why doesnt Get-CMDiscoveryMethod return a "Enabled" property?
   why does Get-CMDiscoveryMethod take sooooo long to execute?
   why are you reading this?
+  why am I talking to myself?
 .NOTES
-  get some sleep
+  get some sleep - this function takes a looooong time to execute
 #>
 
 function Test-CMDiscoveryEnabled {
