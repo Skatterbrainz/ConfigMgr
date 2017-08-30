@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<configuration>
+  <cmsite>
+    <applications comment="Applications">
+        <application name="7-Zip" enabled="true" publisher="7-Zip" version="16.04" categories="General" comment="File compression utility" folder="Utilities" keywords="file,zip,utility,archive,compression">
+            <deptypes comment="Deployment Types">
+                <deptype name="x64 installer" source="\\contoso.com\software\apps\7-zip\1701\7z1701-x64.msi" options="auto" comment="64-bit installer" />
+                <deptype name="x86 installer" source="\\contoso.com\software\apps\7-zip\1701\7z1701.msi" options="auto" comment="32-bit installer" />
+            </deptypes>
+        </application>
+        <application name="Notepad++ 7.5" enabled="true" publisher="Notepad++" version="7.5" categories="Developer,Engineering" comment="Text and Code editor" folder="Utilities" keywords="editor,text,code,programming,script">
+            <deptypes comment="Deployment Types">
+                <deptype name="x64 installer" source="\\contoso.com\software\Apps\Notepad++\7.5\npp.7.5.installer.x64.exe" options="/s" uninstall="C:\Program Files\Notepad++\uninstall.exe" detect="registry:HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Notepad++,DisplayVersion,-ge,7.5" requires="" comment="64-bit installer" />
+                <deptype name="x86 installer" source="\\contoso.com\software\Apps\Notepad++\7.5\npp.7.5.installer.exe" options="/s" uninstall="C:\Program Files\Notepad++\uninstall.exe" detect="registry:HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Notepad++,DisplayVersion,-ge,7.5" requires="" comment="32-bit installer" />
+            </deptypes>
+        </application>
+        <application name="Google Earth" enabled="true" publisher="Google" version="7.1" categories="Developer" comment="Mapping and visualization" folder="Utilities" keywords="google,earth,maps,model,3d">
+            <deptypes comment="Deployment Types">
+                <deptype name="x86 installer" source="\\contoso.com\software\apps\Google\Earth\GoogleEarth7.1.5.1557.msi" options="auto" comment="32-bit installer" />
+            </deptypes>
+        </application>
+    </applications>
+  </cmsite>
+</configuration>
