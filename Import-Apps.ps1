@@ -1,3 +1,4 @@
+[CmdletBinding(SupportsShouldProcess=$True)]
 <#
 .NOTES
   Usage...
