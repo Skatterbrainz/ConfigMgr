@@ -36,20 +36,20 @@ function Import-CMSiteApplications {
         $appCats = $appSet.categories
         $appKeys = $appSet.keywords
 
-        Write-Host "app name......... $appName"
-        Write-Host "app publisher.... $appPub"
-        Write-Host "app comment...... $appComm"
-        Write-Host "app version...... $appVer"
-        Write-Host "app categories... $appCats"
-        Write-Host "app keywords..... $appKeys"
+        Write-Verbose "app name......... $appName"
+        Write-Verbose "app publisher.... $appPub"
+        Write-Verbose "app comment...... $appComm"
+        Write-Verbose "app version...... $appVer"
+        Write-Verbose "app categories... $appCats"
+        Write-Verbose "app keywords..... $appKeys"
 
         try {
             $app = New-CMApplication -Name "$appName" -Description "appComm" -SoftwareVersion "1.0" -AutoInstall $true -Publisher $appPub -ErrorAction SilentlyContinue
-            Write-Host "application created successfully"
+            Write-Verbose "application created successfully"
         }
         catch {
             if ($_.Exception.Message -eq 'An object with the specified name already exists.') {
-                Write-Host "Application already defined" -ForegroundColor Cyan
+                Write-Verbose "Application already defined"
                 $app = Get-CMApplication -Name $appName
             }
             else {
@@ -79,26 +79,26 @@ function Import-CMSiteApplications {
                 $depFile   = Split-Path -Path $depSource -Leaf
                 $program   = "$depFile $depOpts"
 
-                Write-Host "dep name........ $depName"
-                Write-Host "dep comment..... $depComm"
-                Write-Host "dep Source...... $depSource"
-                Write-Host "dep options..... $depOpts"
-                Write-Host "dep detect...... $depData"
-                Write-Host "dep uninstall... $uninst"
-                Write-Host "dep reqts....... $reqts"
-                Write-Host "dep path........ $depPath"
-                Write-Host "dep file........ $depFile"
-                Write-Host "dep program..... $program"
+                Write-Verbose "dep name........ $depName"
+                Write-Verbose "dep comment..... $depComm"
+                Write-Verbose "dep Source...... $depSource"
+                Write-Verbose "dep options..... $depOpts"
+                Write-Verbose "dep detect...... $depData"
+                Write-Verbose "dep uninstall... $uninst"
+                Write-Verbose "dep reqts....... $reqts"
+                Write-Verbose "dep path........ $depPath"
+                Write-Verbose "dep file........ $depFile"
+                Write-Verbose "dep program..... $program"
 
                 if ($depOpts -eq 'auto') {
-                    Write-Host "installer type: msi" -ForegroundColor Cyan
+                    Write-Verbose "installer type: msi"
                     try {
                         Add-CMDeploymentType -ApplicationName $appName -AutoIdentifyFromInstallationFile -ForceForUnknownPublisher $true -InstallationFileLocation $depSource -MsiInstaller -DeploymentTypeName $depName
-                        Write-Host "deployment type created"
+                        Write-Verbose "deployment type created"
                     }
                     catch {
                         if ($_.Exception.Message -like '*same name already exists.') {
-                            Write-Host "deployment type already exists" -ForegroundColor Cyan
+                            Write-Verbose "deployment type already exists"
                         }
                         else {
                             Write-Error $_
@@ -125,7 +125,7 @@ try {
 }
 catch {}
 "@
-                    Write-Host "rule: $scriptDetection"
+                    Write-Verbose "rule: $scriptDetection"
 
                     $DeploymentTypeHash = @{
                         ManualSpecifyDeploymentType = $true
@@ -144,18 +144,18 @@ catch {}
                         InstallationProgramVisibility = 'Hidden'
                     }
 
-                    Write-Host "Adding Deployment Type" -ForegroundColor Green
+                    Write-Verbose "Adding Deployment Type"
 
                     Add-CMDeploymentType @DeploymentTypeHash -EnableBranchCache $True
 
                     if ($folder -eq "") {
-                        Write-Host "Moving application object to folder: $folder" -ForegroundColor Green
+                        Write-Verbose "Moving application object to folder: $folder"
                         $app = Get-CMApplication -Name $ApplicationName
                         $app | Move-CMObject -FolderPath "Application\$folder" | Out-Null
                     }
                 } # if
             } # foreach - deployment type
-            Write-Host "-----------------------------------------------" -ForegroundColor Cyan
+            Write-Verbose "-----------------------------------------------"
         } # if
     } # foreach - application
     Write-Output $result
