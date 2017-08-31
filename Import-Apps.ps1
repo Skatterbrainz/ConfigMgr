@@ -1,16 +1,35 @@
-[CmdletBinding(SupportsShouldProcess=$True)]
+#requires -RunAsAdministrator
+#requires -version 3
 <#
+.SYNOPSIS
+  Import CM Applications from an XML file
+.DESCRIPTION
+  Import CM Applications from an XML file
+.PARAMETER DataSet
+  [xml] (required) results of XML import using Get-Content, etc.
+.PARAMETER SiteCode
+  [string] (required) ConfigMgr site code
+.PARAMETER HostName
+  [string] (required) ConfigMgr site server (MP or SMS Provider)
 .NOTES
-  Usage...
-  
+  Author: skatterbrainz@github
+.EXAMPLE
   [xml]$xmldata = Get-Content ".\Import-Apps.xml"
-  .\Import-Apps.ps1 -DataSet $xmldata
+  .\Import-Apps.ps1 -DataSet $xmldata -SiteCode "P01" -HostName "CM01"
 #>
-
+[CmdletBinding(SupportsShouldProcess=$True)]
+param (
+  [parameter(Mandatory=$True)]
+    [ValidateNotNullOrEmpty()]
+    $DataSet,
+  [parameter(Mandatory=$True)]
+    [ValidateNotNullOrEmpty()]
+    [string] $SiteCode,
+  [parameter(Mandatory=$True)]
+    [ValidateNotNullOrEmpty()]
+    [string] $HostName
+)
 # based on = https://raw.githubusercontent.com/DexterPOSH/PS_ConfigMgr/master/SCCM2012_CreateScriptApps.ps1
-$sitecode  = "P01"
-$hostname  = "CM02"
-
 Import-Module -Name "$(Split-Path $Env:SMS_ADMIN_UI_PATH)\ConfigurationManager.psd1"
 Set-Location -Path "$sitecode`:"
 
