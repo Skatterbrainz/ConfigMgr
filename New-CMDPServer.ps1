@@ -38,6 +38,6 @@ Write-Verbose "configuring DP options"
 
 Set-CMDistributionPoint -InputObject $dp -Description "DP Server 123" -ClientConnectionType InternetAndIntranet `
     -EnableAnonymous $True -EnablePxe $True -AllowPxeResponse $True -EnableUnknownComputerSupport $True `
-    -PxePassword $pxepwd -RespondToAllNetwork $True -EnableBranchCache $True
+    -PxePassword $pxepwd -RespondToAllNetwork -EnableBranchCache $True
 
 Write-Host "$ServerName is now a DP server"
