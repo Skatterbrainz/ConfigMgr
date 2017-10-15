@@ -1,8 +1,13 @@
-param (
-    [parameter(Mandatory=$True)]
-    [ValidateNotNullOrEmpty()]
-    [string] $ServerName = "fs1.contoso.com"
-)
+function New-CMDpServer {
+  [CmdletBinding(SupportsShouldProcess=$True)]
+  param (
+      [parameter(Mandatory=$True)]
+        [ValidateNotNullOrEmpty()]
+        [string] $ServerName,
+      [parameter(Mandatory=$True)]
+        [ValidateSet('Basic','Pxe')]
+        [string] $RoleType
+  )
 
 $date   = [DateTime]::Now.AddYears(30)
 $pxepwd = ConvertTo-SecureString "P@ssw0rd123" -AsPlainText -Force
