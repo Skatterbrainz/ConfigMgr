@@ -41,8 +41,17 @@ if (-not $dp) {
 
 Write-Verbose "configuring DP options"
 
-Set-CMDistributionPoint -InputObject $dp -Description "DP Server 123" -ClientConnectionType InternetAndIntranet `
-    -EnableAnonymous $True -EnablePxe $True -AllowPxeResponse $True -EnableUnknownComputerSupport $True `
-    -PxePassword $pxepwd -RespondToAllNetwork -EnableBranchCache $True
+switch ($RoleType) {
+  'Basic' {
+    Set-CMDistributionPoint -InputObject $dp -Description "DP Server 123" -ClientConnectionType InternetAndIntranet `
+      -EnableAnonymous $True -EnableBranchCache $True
+    break
+  'Pxe' {
+    Set-CMDistributionPoint -InputObject $dp -Description "DP Server 123" -ClientConnectionType InternetAndIntranet `
+      -EnableAnonymous $True -EnableBranchCache $True -EnablePxe $True -AllowPxeResponse $True -EnableUnknownComputerSupport $True `
+      -PxePassword $pxepwd -RespondToAllNetwork
+    break
+  }
+} # switch
 
 Write-Host "$ServerName is now a DP server"
